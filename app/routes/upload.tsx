@@ -78,7 +78,7 @@ const upload = () => {
     await kv.set(`resume ${uuid}`, JSON.stringify(data));
 
     setStatusText("Analysis completed!, redirecting...");
-    console.log("data: ", data);
+    navigate(`/resume/${uuid}`);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -91,6 +91,11 @@ const upload = () => {
     const companyName = formData.get("company-name") as string;
     const jobTitle = formData.get("job-title") as string;
     const jobDescription = formData.get("job-description") as string;
+
+    if (!file) {
+      setStatusText("Please select a file to upload.");
+      return;
+    }
 
     handleAnalyze({ companyName, jobTitle, jobDescription, file });
   };
